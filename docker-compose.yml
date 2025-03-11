@@ -1,0 +1,96 @@
+# Note: Docker Compose v2 no longer needs a `version:` field.
+
+services:
+  # 1) MongoDB
+  mongo:
+    image: mongo:latest
+    container_name: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./mongo_data:/data/db
+    environment:
+      MONGO_INITDB_DATABASE: "swapsync"
+
+  # 2) Auth Service
+  auth-service:
+    build:
+      context: .                               # Entire backend folder as build context
+      dockerfile: ./services/auth-service/Dockerfile
+    container_name: auth-service
+    ports:
+      - "50051:50051"
+    depends_on:
+      - mongo
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/swapsync
+      # e.g. JWT_SECRET=some_jwt_secret
+
+  # 3) Portfolio Service
+  portfolio-service:
+    build:
+      context: .
+      dockerfile: ./services/portfolio-service/Dockerfile
+    container_name: portfolio-service
+    ports:
+      - "50052:50052"
+    depends_on:
+      - mongo
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/swapsync
+
+  # 4) Trade Service
+  trade-service:
+    build:
+      context: .
+      dockerfile: ./services/trade-service/Dockerfile
+    container_name: trade-service
+    ports:
+      - "50053:50053"
+    depends_on:
+      - mongo
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/swapsync
+
+  # 5) Market Data Service
+  market-data-service:
+    build:
+      context: .
+      dockerfile: ./services/market-data-service/Dockerfile
+    container_name: market-data-service
+    ports:
+      - "50054:50054"
+    depends_on:
+      - mongo
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/swapsync
+      - ALPHA_VANTAGE_KEY=13U41V5FYAMO15E4
+
+
+  # 6) Billing Service
+  billing-service:
+    build:
+      context: .
+      dockerfile: ./services/billing-service/Dockerfile
+    container_name: billing-service
+    ports:
+      - "50055:50055"
+    depends_on:
+      - mongo
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/swapsync
+      - SENDGRID_API_KEY=YOUR_SENDGRID_KEY
+
+  # 7) Notification Service
+  notification-service:
+    build:
+      context: .
+      dockerfile: ./services/notification-service/Dockerfile
+    container_name: notification-service
+    ports:
+      - "50056:50056"
+    depends_on:
+      - mongo
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/swapsync
+      - SENDGRID_API_KEY=YOUR_SENDGRID_KEY

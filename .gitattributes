@@ -1,0 +1,7 @@
+# Force Go files to use LF line endings
+*.go text eol=lf
+
+# Force proto files to use LF line endings
+*.proto text eol=lf
+
+# For everything else, you can decide or leave defaults

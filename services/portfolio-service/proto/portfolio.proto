@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+package portfolio;
+option go_package = "github.com/ankan8/swapsync/backend/services/portfolio-service/proto";
+
+service PortfolioService {
+  rpc GetPortfolio (GetPortfolioRequest) returns (GetPortfolioResponse);
+  rpc UpdateHoldings (UpdateHoldingsRequest) returns (UpdateHoldingsResponse);
+}
+
+message GetPortfolioRequest {
+  string user_id = 1; 
+}
+
+message GetPortfolioResponse {
+  repeated Holding holdings = 1;
+}
+
+message Holding {
+  string symbol = 1;
+  double quantity = 2;
+  double average_price = 3;
+}
+
+message UpdateHoldingsRequest {
+  string user_id = 1;
+  string symbol = 2;
+  double quantity = 3;
+  double price = 4;
+}
+
+message UpdateHoldingsResponse {
+  bool success = 1;
+}

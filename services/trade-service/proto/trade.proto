@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+package trade;
+option go_package = "github.com/ankan8/swapsync/backend/services/trade-service/proto";
+
+service TradeService {
+  rpc PlaceOrder (PlaceOrderRequest) returns (PlaceOrderResponse);
+  rpc GetTradeHistory (GetTradeHistoryRequest) returns (GetTradeHistoryResponse);
+}
+
+message PlaceOrderRequest {
+  string user_id = 1;
+  string symbol = 2;
+  double quantity = 3;
+  double price = 4;
+  string order_type = 5; // e.g. "BUY" or "SELL"
+}
+
+message PlaceOrderResponse {
+  bool success = 1;
+  string order_id = 2;
+}
+
+message GetTradeHistoryRequest {
+  string user_id = 1;
+}
+
+message GetTradeHistoryResponse {
+  repeated TradeRecord trades = 1;
+}
+
+message TradeRecord {
+  string trade_id = 1;
+  string symbol = 2;
+  double quantity = 3;
+  double price = 4;
+  string order_type = 5;
+  string timestamp = 6;
+}

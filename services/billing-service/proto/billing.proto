@@ -1,0 +1,61 @@
+syntax = "proto3";
+
+package billing;
+option go_package = "github.com/ankan8/swapsync/backend/services/billing-service/proto";
+
+service BillingService {
+  // Existing RPCs
+  rpc CalculateCommission (CalculateCommissionRequest) returns (CalculateCommissionResponse);
+  rpc ProcessPayment (ProcessPaymentRequest) returns (ProcessPaymentResponse);
+
+  // New RPCs for wallet
+  rpc DepositFunds (DepositFundsRequest) returns (DepositFundsResponse);
+  rpc WithdrawFunds (WithdrawFundsRequest) returns (WithdrawFundsResponse);
+  rpc GetBalance (GetBalanceRequest) returns (GetBalanceResponse);
+}
+
+// Commission calculation
+message CalculateCommissionRequest {
+  double trade_amount = 1;
+}
+message CalculateCommissionResponse {
+  double commission = 1;
+}
+
+// Payment
+message ProcessPaymentRequest {
+  string user_id = 1;
+  double amount = 2;
+  string method = 3;
+}
+message ProcessPaymentResponse {
+  bool success = 1;
+  string transaction_id = 2;
+}
+
+// New messages for wallet
+message DepositFundsRequest {
+  string user_id = 1;
+  double amount = 2;
+}
+message DepositFundsResponse {
+  bool success = 1;
+  double new_balance = 2;
+}
+
+message WithdrawFundsRequest {
+  string user_id = 1;
+  double amount = 2;
+}
+message WithdrawFundsResponse {
+  bool success = 1;
+  double new_balance = 2;
+}
+
+message GetBalanceRequest {
+  string user_id = 1;
+}
+message GetBalanceResponse {
+  bool success = 1;
+  double balance = 2;
+}

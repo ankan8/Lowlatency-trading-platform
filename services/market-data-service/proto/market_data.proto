@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package marketdata;
+option go_package = "github.com/ankan8/swapsync/backend/services/market-data-service/proto";
+
+service MarketDataService {
+  rpc GetQuote (GetQuoteRequest) returns (GetQuoteResponse);
+  // Optional: server-side streaming for real-time updates
+  rpc StreamQuotes (StreamQuotesRequest) returns (stream QuoteUpdate);
+}
+
+message GetQuoteRequest {
+  string symbol = 1;
+}
+
+message GetQuoteResponse {
+  string symbol = 1;
+  double price = 2;
+  string timestamp = 3;
+}
+
+message StreamQuotesRequest {
+  repeated string symbols = 1;
+}
+
+message QuoteUpdate {
+  string symbol = 1;
+  double price = 2;
+  string timestamp = 3;
+}

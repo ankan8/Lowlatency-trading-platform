@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+package notification;
+option go_package = "github.com/ankan8/swapsync/backend/services/notification-service/proto";
+
+// NotificationService handles sending and streaming notifications.
+service NotificationService {
+  // Send a single notification.
+  rpc SendNotification (SendNotificationRequest) returns (SendNotificationResponse);
+
+  // Optional: server-side streaming for real-time notifications.
+  rpc StreamNotifications (StreamNotificationsRequest) returns (stream NotificationMessage);
+}
+
+// Request/Response for sending a single notification.
+message SendNotificationRequest {
+  string user_id = 1;
+  string message = 2;
+  string channel = 3; // e.g. "EMAIL", "SMS", "PUSH"
+}
+
+message SendNotificationResponse {
+  bool success = 1;
+  string notification_id = 2;
+}
+
+// For streaming notifications:
+message StreamNotificationsRequest {
+  string user_id = 1; // user to subscribe
+}
+
+message NotificationMessage {
+  string notification_id = 1;
+  string message = 2;
+  string timestamp = 3;
+}

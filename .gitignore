@@ -1,0 +1,44 @@
+# 1) Go build artifacts
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+
+# 2) Go mod/cache
+vendor/
+*.modcache/
+*.sum
+
+# 3) OS-specific files
+.DS_Store
+Thumbs.db
+
+# 4) Editor/IDE files
+.vscode/
+.idea/
+*.swp
+
+# 5) Logs
+*.log
+
+# 6) Docker
+docker-compose.override.yml
+docker-compose.*.yml
+# If you keep local volumes:
+mongo_data/
+*.pid
+
+# 7) Env files
+#   - Root .env
+.env
+#   - Any .env inside any "cmd" folder of any service
+**/cmd/**/.env
+
+# 8) Additional secrets or config
+secrets/
+config/*.json
+*.key
+*.pem
