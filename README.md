@@ -2,9 +2,6 @@
 
 A high-performance trading platform built to handle low-latency transactions, real-time market data processing, and advanced financial operations. This project leverages a microservices architecture, gRPC communication, containerization with Docker, and integrates with external APIs (like Razorpay and Alpha Vantage) to deliver a robust trading ecosystem.
 
-## Table of Contents
-
-
 ## Overview
 
 The Lowlatency Trading Platform provides a full suite of trading and finance functionalities in a modular microservices setup. Each service is independently deployable and communicates via gRPC to ensure high performance. The platform is designed to meet the demands of modern financial markets by offering real-time data, secure transactions, and comprehensive trading features—including advanced risk management with stop loss orders.
